@@ -11,6 +11,8 @@ import UIKit
 //TableViewController won't have a clue about our Car model. It only knows the CarViewModel.
 class TableViewController: UITableViewController {
 
+    let cars: [CarViewModel] = (UIApplication.shared.delegate as! AppDelegate).cars
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,23 +32,38 @@ class TableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return cars.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CarCell", for: indexPath)
+        let carViewModel = cars[indexPath.row]
+        
+        cell.textLabel?.text = carViewModel.titleText
+        cell.detailTextLabel?.text = carViewModel.horsepowerText
+        loadImage(cell: cell, photoURL: carViewModel.photoURL)
         // Configure the cell...
 
         return cell
     }
-    */
+    
+    func loadImage(cell: UITableViewCell, photoURL: NSURL?) {
+        DispatchQueue.global(qos: .background).async {
+            guard let imageURL = photoURL, let imageData = NSData(contentsOf: imageURL as URL) else {
+                return
+            }
+            DispatchQueue.main.async {
+                cell.imageView?.image = UIImage(data: imageData as Data)
+                cell.setNeedsLayout()
+            }
+            
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.
