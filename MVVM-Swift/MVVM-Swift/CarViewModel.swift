@@ -10,30 +10,24 @@ import Foundation
 
 //CarViewModel add a bit of decoration to our plain class.
 class CarViewModel {
-    private var car: Car?
-    var modelText: String? {
-        return car?.model
+    private var car: Car
+    static let horsepowerPerKilowatt = 1.34102209
+    
+    var modelText: String {
+        return car.model
     }
-    var makeText: String? {
-        return car?.make
+    var makeText: String {
+        return car.make
     }
-    var horsepowerText: String? {
-        guard let horsepower = car?.horsepower else {
-            return nil
-        }
+    var horsepowerText: String {
+        let horsepower = Int(round(Double(car.kilowatts) * CarViewModel.horsepowerPerKilowatt))
         return "\(horsepower) HP"
     }
     var titleText: String? {
-        guard let make = car?.make, let model = car?.model else {
-            return nil
-        }
-        return "\(make) \(model)"
+        return "\(car.make) \(car.model)"
     }
     var photoURL: NSURL? {
-        guard let photoURL = car?.photoURL else {
-            return nil
-        }
-        return NSURL(string: photoURL)
+        return NSURL(string: car.photoURL)
     }
     
     init(car: Car) {

@@ -9,15 +9,15 @@
 import Foundation
 
 class Car {
-    var model: String?
-    var make: String?
-    var horsepower: Int?
-    var photoURL: String?
+    var model: String
+    var make: String
+    var kilowatts: Int
+    var photoURL: String
     
-    init(model: String, make: String, horsepower: Int, photoURL: String) {
+    init(model: String, make: String, kilowatts: Int, photoURL: String) {
         self.model = model
         self.make = make
-        self.horsepower = horsepower
+        self.kilowatts = kilowatts
         self.photoURL = photoURL
     }
 }
